@@ -1,5 +1,6 @@
 import { parse } from "./deps.ts";
 import { Protocol } from "./types.ts";
+export type { Protocol } from "./types.ts";
 
 // List of slack-cli communication protocols supported
 const SUPPORTED_NAMED_PROTOCOLS = [
