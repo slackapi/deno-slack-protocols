@@ -35,4 +35,11 @@ export interface Protocol {
    * @returns
    */
   uninstall?: () => void;
+  /**
+   * Retrieve all command-line flags related to the specific protocol implementation. May be useful if child processes are being
+   * spawned by the SDK, such as in local-run mode of deno-slack-runtime.
+   * @returns An array of strings representing any protocol-specific command-line flags passed from the CLI to the hook, if applicable
+   * to the specific protocol implementation
+   */
+  getCLIFlags?: () => string[];
 }

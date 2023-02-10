@@ -3,9 +3,11 @@ import { Protocol } from "./types.ts";
 export type { Protocol } from "./types.ts";
 
 // List of slack-cli communication protocols supported
+const STREAM_PROTOCOL = "dont-cross-the-streams";
+const MSG_BOUNDARY_PROTOCOL = "message-boundaries";
 const SUPPORTED_NAMED_PROTOCOLS = [
-  "dont-cross-the-streams",
-  "message-boundaries",
+  STREAM_PROTOCOL,
+  MSG_BOUNDARY_PROTOCOL,
 ];
 
 /**
@@ -54,6 +56,7 @@ const DontCrossTheStreamsProtocol = function (): Protocol {
       globalThis.console.error = originalConsole.error;
       globalThis.console.warn = originalConsole.warn;
     },
+    getCLIFlags: () => [`--protocol=${STREAM_PROTOCOL}`],
   };
   return protObj;
 };
@@ -77,6 +80,8 @@ const MessageBoundaryProtocol = function (args: string[]): Protocol {
     respond: (data: any) => {
       console.log(boundary + "\n" + data + boundary);
     },
+    getCLIFlags:
+      () => [`--protocol=${MSG_BOUNDARY_PROTOCOL}`, `--boundary=${boundary}`],
   };
 };
 
