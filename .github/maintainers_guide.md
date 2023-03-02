@@ -6,44 +6,59 @@ this project. If you use this package within your own software as is but don't p
 
 ## Tools
 
-You will need [Deno](https://deno.land).
+All you need to work on this project is a recent version of [Deno](https://deno.land/)
 
 ## Tasks
 
 ### Testing
 
-This package has unit tests in the `src/tests` directory. You can run the entire test suite (along with linting and formatting) via:
+Test can be run directly with Deno:
 
-    deno task test
+```zsh
+deno task test
+```
 
-To run the tests along with a coverage report:
+You can also run a test coverage report with:
 
-    deno task coverage
+```zsh
+deno task coverage
+```
 
-This command is also executed by GitHub Actions, the continuous integration service, for every Pull Request and branch.
+### Lint and format
+
+The linting and formatting rules are defined in the `deno.jsonc` file, your IDE can be set up to follow these rules:
+
+1. Refer to the [Deno Set Up Your Environment](https://deno.land/manual/getting_started/setup_your_environment) guidelines to set up your IDE with the proper plugin.
+2. Ensure that the `deno.jsonc` file is set as the configuration file for your IDE plugin
+   * If you are using VS code [this](https://deno.land/manual/references/vscode_deno#using-a-configuration-file) is already configured in `.vscode/settings.json`
+
+#### Linting
+
+The list of linting rules can be found in [the linting deno docs](https://lint.deno.land/).
+Currently we apply all recommended rules.
+
+#### Format
+
+The list of format options is defined in the `deno.jsonc` file. They closely resemble the default values.
 
 ### Releasing
 
-Releasing can feel intimidating at first, but rest assured: if you make a mistake, don't fret! We can always roll forward with another release 😃
+Releases for this library are automatically generated off of git tags. Before creating a new release, ensure that everything on the `main` branch since the last tag is in a releasable state! At a minimum, [run the tests](#testing).
 
-TODO: think integration testing through, adjust these instructions
+To create a new release:
 
-1. Make sure your local `main` branch has the latest changes.
-2. Run the tests as per the above Testing section, and any other local verification, such as:
-  - Local integration tests between the Slack CLI, deno-sdk-based application template(s) and this repo. One can modify a deno-sdk-based app project's `slack.json` file to point the `get-hooks` hook to a local version of this repo rather than the deno.land-hosted version.
-3. Bump the version number for this repo in adherence to [Semantic Versioning][semver] in `src/version.ts`.
-  - Make a single commit with a message for the version bump.
-4. Send a pull request with this change and tag @slackapi/HDX and/or @slackapi/denosaurs for review.
-5. Once approved and merged, a deployment workflow will kick off. This workflow will:
-  - Create a `git` tag matching the version string you changed in `src/version.ts`.
-  - Create a new GitHub Release (initially set to a pre-release) for the version.
-  - As soon as the `git` tag lands in the repo, this will kick off an automatic deployment to deno.land for this module: https://deno.land/x/deno_slack_hooks
-6. Edit the latest generated GitHub Release from the [Releases page](https://github.com/slackapi/deno-slack-hooks/releases):
-  - Ensure the changelog notes are human readable, accurate, and up-to-date.
-  - Un-check the "This is a pre-release" checkbox once you are happy with the release notes.
-  - Click "Update release."
-11. If all went well, you should see your version up on [deno.land](https://deno.land/x/deno_slack_hooks)! If it didn't work, check:
-  - The [GitHub Actions page for the continuous deployment workflow](https://github.com/slackapi/deno-slack-hooks/actions/workflows/deno-cd.yml). Did it fail? If so, why?
+1. Create a new GitHub Release from the [Releases page](https://github.com/slackapi/deno-slack-builder/releases) by clicking the "Draft a new release" button.
+2. Input a new version manually into the "Choose a tag" input. You can start off by incrementing the version to reflect a patch. (i.e. 1.16.0 -> 1.16.1)
+    * After you input the new version, click the "Create a new tag: x.x.x on publish" button. This won't create your tag immediately.
+    * Auto-generate the release notes by clicking the "Auto-generate release notes" button. This will pull in changes that will be included in your release.
+    * Flip to the preview mode and review the pull request labels of the changes included in this release (i.e. `semver:minor` `semver:patch`, `semver:major`). Tip: Your release version should be based on the tag of the largest change, so if this release includes a `semver:minor`, the release version in your tag should be upgraded to reflect a minor.
+    * Ensure that this version adheres to [semantic versioning][semver]. See [Versioning](#versioning-and-tags) for correct version format. Version tags should match the following pattern: `1.0.1` (no `v` preceding the number).
+3. Set the "Target" input to the "main" branch.
+4. Name the release title after the version tag.
+5. Make any adjustments to generated release notes to make sure they are accessible and approachable and that an end-user with little context about this project could still understand.
+6. Make sure "This is a pre-release" is _not_ checked.
+7. Publish the release by clicking the "Publish release" button!
+8. After a few minutes, the corresponding version will be available on https://deno.land/x/deno_slack_protocols.
 
 ## Workflow
 
@@ -74,7 +89,6 @@ Labels are used to run issues through an organized workflow. Here are the basic 
 *  `security`: An issue that has special consideration for security reasons.
 *  `good first contribution`: An issue that has a well-defined relatively-small scope, with clear expectations. It helps when the testing approach is also known.
 *  `duplicate`: An issue that is functionally the same as another issue. Apply this only if you've linked the other issue by number.
-
 
 **Triage** is the process of taking new issues that aren't yet "seen" and marking them with a basic
 level of information with labels. An issue should have **one** of the following labels applied:
