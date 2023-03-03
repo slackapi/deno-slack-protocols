@@ -38,36 +38,17 @@ export const MessageBoundaryProtocol = function (args: string[]): Protocol {
     args,
   );
   if (!boundary) throw new Error("no boundary argument provided!");
-  const originalConsole = {
-    log: globalThis.console.log,
-    warn: globalThis.console.warn,
-    error: globalThis.console.error,
-  };
   const protocol = {
     name: MSG_BOUNDARY_PROTOCOL,
     log: console.log,
-    // TODO: `error` could just as easily remain as console.error (i.e stderr) - BUT - we need to ensure that on the CLI side, we stream hook stderr out straight to the user
-    // TODO: if we override default console.error functionality (as below), then we also need to implement the `install()` and `uninstall()` methods
-    // TODO: `install()` and `uninstall()` would 'clobber' `globalThis.console` methods with these methods, to ensure that any userland or SDK code
-    //       does not litter stdout in ways that violate the protocol's rules.
-    error: console.log,
-    warn: console.log, // TODO: same as previous line
+    error: console.error,
+    warn: console.warn,
     // deno-lint-ignore no-explicit-any
     respond: (data: any) => {
       console.log(boundary + data + boundary);
     },
     getCLIFlags:
       () => [`--protocol=${MSG_BOUNDARY_PROTOCOL}`, `--boundary=${boundary}`],
-    install: () => {
-      globalThis.console.log = protocol.log;
-      globalThis.console.error = protocol.error;
-      globalThis.console.warn = protocol.warn;
-    },
-    uninstall: () => {
-      globalThis.console.log = originalConsole.log;
-      globalThis.console.error = originalConsole.error;
-      globalThis.console.warn = originalConsole.warn;
-    },
   };
   return protocol;
 };
