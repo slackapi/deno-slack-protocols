@@ -1,5 +1,7 @@
 # deno-slack-protocols
 
+[![codecov](https://codecov.io/gh/slackapi/deno-slack-protocols/graph/badge.svg?token=SR0MMXTQRW)](https://codecov.io/gh/slackapi/deno-slack-protocols)
+
 This library is a utility for use by Slack's next-generation application
 platform, focused on remixable units of functionality encapsulated as ephemeral
 functions. It implements the rules for communication (i.e. the protocol) between
