@@ -40,6 +40,8 @@ jobs:
     permissions:
       checks: write
     steps:
+      - name: Setup repo
+        uses: actions/checkout@v4
       - name: Report health score
         uses: slackapi/slack-health-score@v0
         with:
