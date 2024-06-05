@@ -35,7 +35,9 @@ export const BaseProtocol = function (args: string[]): Protocol {
  * @param args command-line arguments passed to this process
  * @returns {Protocol}
  */
-export const MessageBoundaryProtocol = function (args: string[]): Required<Pick<Protocol, 'getCLIFlags'>> & Protocol {
+export const MessageBoundaryProtocol = function (
+  args: string[],
+): Required<Pick<Protocol, "getCLIFlags">> & Protocol {
   const { boundary } = parse(
     args,
   );
