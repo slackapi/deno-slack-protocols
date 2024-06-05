@@ -21,14 +21,14 @@ export interface Protocol {
   warn: typeof console.warn;
   /**
    * Utility method for responding to CLI hook invocations.
-   * @param data Stringified JSON to return to the CLI
+   * @param {data} Stringified JSON to return to the CLI
    * @returns
    */
   respond: (data: string) => void;
   /**
    * Retrieve all command-line flags related to the specific protocol implementation. May be useful if child processes are being
    * spawned by the SDK, such as in local-run mode of deno-slack-runtime.
-   * @returns string[] An array of strings representing any protocol-specific command-line flags passed from the CLI to the hook, if applicable
+   * @returns {string[]} An array of strings representing any protocol-specific command-line flags passed from the CLI to the hook, if applicable
    * to the specific protocol implementation
    */
   getCLIFlags?: () => string[];

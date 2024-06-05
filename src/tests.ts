@@ -1,3 +1,4 @@
+import { assertMatch } from "https://deno.land/std@0.177.0/testing/asserts.ts";
 import {
   assertEquals,
   assertNotEquals,
@@ -45,6 +46,13 @@ Deno.test("MessageBoundaryProtocol", async (t) => {
       globalThis.console.log = origLog;
     },
   );
+  await t.step("should return a `getCLIFlags` method that returns correct --protocol and --boundary flags", () => {
+    const providedFlags = ["--boundary=12345"];
+    const prot = MessageBoundaryProtocol(providedFlags);
+    const flags = prot.getCLIFlags();
+    assertMatch(flags[0], /message-boundaries/);
+    assertEquals(flags[1], providedFlags[0]); 
+  });
 });
 
 Deno.test("getProtocolInterface()", async (t) => {

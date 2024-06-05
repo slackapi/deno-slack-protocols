@@ -1,17 +1,16 @@
 {
   "$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
+  "name": "@slack/protocols",
+  "version": "0.0.2",
+  "exports": "./src/mod.ts",
   "fmt": {
-    "files": {
-      "include": ["src", "docs", "README.md"]
-    },
-    "options": {
-      "semiColons": true,
-      "indentWidth": 2,
-      "lineWidth": 80,
-      "proseWrap": "always",
-      "singleQuote": false,
-      "useTabs": false
-    }
+    "include": ["src", "docs", "README.md"],
+    "semiColons": true,
+    "indentWidth": 2,
+    "lineWidth": 80,
+    "proseWrap": "always",
+    "singleQuote": false,
+    "useTabs": false
   },
   "lint": {
     "files": {
@@ -26,6 +25,6 @@
   "tasks": {
     "test": "deno fmt --check && deno lint && deno test --allow-read --allow-net",
     "generate-lcov": "rm -rf .coverage && deno test --reporter=dot --allow-read --allow-net --coverage=.coverage && deno coverage --exclude=fixtures --exclude=test --lcov --output=lcov.info .coverage",
-    "test:coverage": "deno task generate-lcov && deno coverage --exclude=fixtures --exclude=test .coverage src"
+    "test:coverage": "deno task generate-lcov && deno coverage --detailed --exclude=fixtures --exclude=test .coverage src"
   }
 }

@@ -32,8 +32,10 @@ export const BaseProtocol = function (args: string[]): Protocol {
 /**
  * Protocol implementation that only uses stdout, but uses message boundaries to differentiate between
  * diagnostic information and hook responses.
+ * @param args command-line arguments passed to this process
+ * @returns {Protocol}
  */
-export const MessageBoundaryProtocol = function (args: string[]): Protocol {
+export const MessageBoundaryProtocol = function (args: string[]): Required<Pick<Protocol, 'getCLIFlags'>> & Protocol {
   const { boundary } = parse(
     args,
   );
@@ -62,7 +64,7 @@ const PROTOCOL_MAP = {
  * Based on the arguments provided by the CLI to the SDK hook process, returns an appropriate Protocol interface
  * for communicating with the CLI over the specified protocol.
  * @param args string[] An array of strings representing the command-line flags/arguments passed to the hook
- * @returns Protocol An object implementing the Protocol interface
+ * @returns {Protocol} An object implementing the Protocol interface
  */
 export const getProtocolInterface = function (args: string[]): Protocol {
   const { protocol: protocolRequestedByCLI } = parse(
