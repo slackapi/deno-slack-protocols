@@ -13,14 +13,10 @@
     "useTabs": false
   },
   "lint": {
-    "files": {
-      "include": ["src"]
-    }
+    "include": ["src"]
   },
   "test": {
-    "files": {
-      "include": ["src/tests.ts"]
-    }
+    "include": ["src/tests.ts"]
   },
   "tasks": {
     "test": "deno fmt --check && deno lint && deno test --allow-read --allow-net",

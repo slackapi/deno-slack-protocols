@@ -4,7 +4,7 @@ import {
   assertNotEquals,
   assertSpyCall,
   assertThrows,
-  Spy,
+  type Spy,
   spy,
 } from "./dev_deps.ts";
 import {
