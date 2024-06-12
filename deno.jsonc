@@ -1,8 +1,12 @@
 {
   "$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
   "name": "@slack/protocols",
-  "version": "0.0.2-pre.1",
-  "exports": "./src/mod.ts",
+  "version": "0.0.2-pre.2",
+  "exports": {
+    ".": "./src/mod.ts",
+    "mock": "./src/mock.ts",
+    "types": "./src/types.ts"
+  },
   "fmt": {
     "include": ["src", "docs", "README.md"],
     "semiColons": true,
