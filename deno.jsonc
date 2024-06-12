@@ -21,6 +21,9 @@
     "include": ["src"]
   },
   "lock": false,
+  "publish": {
+    "exclude": ["mod.ts", "mock.ts", "types.ts", ".github", ".vscode"]
+  },
   "tasks": {
     "test": "deno fmt --check && deno lint && deno test --allow-read --allow-net",
     "generate-lcov": "rm -rf .coverage && deno test --allow-read --allow-net --coverage=.coverage && deno coverage --exclude=fixtures --exclude=test --lcov --output=lcov.info .coverage",
