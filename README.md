@@ -14,7 +14,7 @@ under the hood.
 
 ## Requirements
 
-This library requires a recent (at least 1.22) version of
+This library requires a recent (at least 1.44) version of
 [deno](https://deno.land).
 
 ## Running Tests
@@ -26,7 +26,7 @@ as desired, you can run:
 
 To get a full test coverage report, run:
 
-    deno task coverage
+    deno task test:coverage
 
 ---
 
