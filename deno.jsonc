@@ -4,8 +4,8 @@
   "version": "0.0.2-pre.2",
   "exports": {
     ".": "./src/mod.ts",
-    "mock": "./src/mock.ts",
-    "types": "./src/types.ts"
+    "./mock": "./src/mock.ts",
+    "./types": "./src/types.ts"
   },
   "fmt": {
     "include": ["src", "docs", "README.md"],
