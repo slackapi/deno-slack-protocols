@@ -1,7 +1,7 @@
 {
   "$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
   "name": "@slack/protocols",
-  "version": "0.0.2",
+  "version": "0.0.2-pre.1",
   "exports": "./src/mod.ts",
   "fmt": {
     "include": ["src", "docs", "README.md"],
@@ -12,15 +12,21 @@
     "singleQuote": false,
     "useTabs": false
   },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@^0.226.0",
+    "@std/cli": "jsr:@std/cli@^0.224.6",
+    "@std/testing": "jsr:@std/testing@^0.225.1"
+  },
   "lint": {
     "include": ["src"]
   },
-  "test": {
-    "include": ["src/tests.ts"]
-  },
+  "lock": false,
   "tasks": {
     "test": "deno fmt --check && deno lint && deno test --allow-read --allow-net",
-    "generate-lcov": "rm -rf .coverage && deno test --reporter=dot --allow-read --allow-net --coverage=.coverage && deno coverage --exclude=fixtures --exclude=test --lcov --output=lcov.info .coverage",
+    "generate-lcov": "rm -rf .coverage && deno test --allow-read --allow-net --coverage=.coverage && deno coverage --exclude=fixtures --exclude=test --lcov --output=lcov.info .coverage",
     "test:coverage": "deno task generate-lcov && deno coverage --detailed --exclude=fixtures --exclude=test .coverage src"
+  },
+  "test": {
+    "include": ["src/tests.ts"]
   }
 }

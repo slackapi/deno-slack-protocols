@@ -1,5 +1,5 @@
 import type { Protocol } from "./types.ts";
-import { spy } from "./dev_deps.ts";
+import { spy } from "@std/testing/mock";
 
 export const MockProtocol = function (): Protocol {
   return {

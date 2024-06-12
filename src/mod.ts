@@ -1,4 +1,4 @@
-import { parse } from "./deps.ts";
+import { parseArgs } from "@std/cli/parse-args";
 import type { Protocol } from "./types.ts";
 
 // List of slack-cli communication protocols supported
@@ -16,7 +16,7 @@ const SUPPORTED_NAMED_PROTOCOLS = [
  * @returns {Protocol}
  */
 export const BaseProtocol = function (args: string[]): Protocol {
-  const { manifest: manifestOnly = false } = parse(args);
+  const { manifest: manifestOnly = false } = parseArgs(args);
   // If the particular hook invocation is requesting for manifest generation, we ensure any logging is a no-op,
   // so as to not litter stdout with logging - and confuse the CLI's manifest JSON payload parsing.
   const loggerMethod = manifestOnly ? () => {} : console.log;
@@ -38,7 +38,7 @@ export const BaseProtocol = function (args: string[]): Protocol {
 export const MessageBoundaryProtocol = function (
   args: string[],
 ): Required<Pick<Protocol, "getCLIFlags">> & Protocol {
-  const { boundary } = parse(
+  const { boundary } = parseArgs(
     args,
   );
   if (!boundary) throw new Error("no boundary argument provided!");
@@ -69,7 +69,7 @@ const PROTOCOL_MAP = {
  * @returns {Protocol} An object implementing the Protocol interface
  */
 export const getProtocolInterface = function (args: string[]): Protocol {
-  const { protocol: protocolRequestedByCLI } = parse(
+  const { protocol: protocolRequestedByCLI } = parseArgs(
     args,
   );
   if (protocolRequestedByCLI) {

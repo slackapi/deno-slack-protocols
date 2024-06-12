@@ -1,12 +1,14 @@
 import {
+  assertSpyCall,
+  type Spy,
+  spy,
+} from "@std/testing/mock";
+import {
   assertEquals,
   assertMatch,
   assertNotEquals,
-  assertSpyCall,
   assertThrows,
-  type Spy,
-  spy,
-} from "./dev_deps.ts";
+} from "@std/assert";
 import {
   BaseProtocol,
   getProtocolInterface,
