@@ -1,8 +1,4 @@
-import {
-  assertSpyCall,
-  type Spy,
-  spy,
-} from "@std/testing/mock";
+import { assertSpyCall, type Spy, spy } from "@std/testing/mock";
 import {
   assertEquals,
   assertMatch,
