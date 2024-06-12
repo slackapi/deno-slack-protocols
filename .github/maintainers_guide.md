@@ -59,7 +59,7 @@ To create a new release:
 5. Make any adjustments to generated release notes to make sure they are accessible and approachable and that an end-user with little context about this project could still understand.
 6. Make sure "This is a pre-release" is _not_ checked.
 7. Publish the release by clicking the "Publish release" button!
-8. After a few minutes, the corresponding version will be available on https://deno.land/x/deno_slack_protocols.
+8. After a few minutes, the corresponding version will be available on https://deno.land/x/deno_slack_protocols and https://jsr.io/@slack/protocols.
 
 ## Workflow
 
