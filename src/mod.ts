@@ -1,4 +1,4 @@
-import { parse } from "./deps.ts";
+import { parseArgs } from "@std/cli/parse-args";
 import type { Protocol } from "./types.ts";
 
 // List of slack-cli communication protocols supported
@@ -13,10 +13,9 @@ const SUPPORTED_NAMED_PROTOCOLS = [
  * and the CLI reads both stdout and stderr and combines them to interpret the hook response.
  * This simplistic protocol has inherent limitations: cannot log diagnostic info!
  * @param args command-line arguments passed to this process
- * @returns {Protocol}
  */
 export const BaseProtocol = function (args: string[]): Protocol {
-  const { manifest: manifestOnly = false } = parse(args);
+  const { manifest: manifestOnly = false } = parseArgs(args);
   // If the particular hook invocation is requesting for manifest generation, we ensure any logging is a no-op,
   // so as to not litter stdout with logging - and confuse the CLI's manifest JSON payload parsing.
   const loggerMethod = manifestOnly ? () => {} : console.log;
@@ -32,9 +31,12 @@ export const BaseProtocol = function (args: string[]): Protocol {
 /**
  * Protocol implementation that only uses stdout, but uses message boundaries to differentiate between
  * diagnostic information and hook responses.
+ * @param args command-line arguments passed to this process
  */
-export const MessageBoundaryProtocol = function (args: string[]): Protocol {
-  const { boundary } = parse(
+export const MessageBoundaryProtocol = function (
+  args: string[],
+): Required<Pick<Protocol, "getCLIFlags">> & Protocol {
+  const { boundary } = parseArgs(
     args,
   );
   if (!boundary) throw new Error("no boundary argument provided!");
@@ -62,10 +64,9 @@ const PROTOCOL_MAP = {
  * Based on the arguments provided by the CLI to the SDK hook process, returns an appropriate Protocol interface
  * for communicating with the CLI over the specified protocol.
  * @param args string[] An array of strings representing the command-line flags/arguments passed to the hook
- * @returns Protocol An object implementing the Protocol interface
  */
 export const getProtocolInterface = function (args: string[]): Protocol {
-  const { protocol: protocolRequestedByCLI } = parse(
+  const { protocol: protocolRequestedByCLI } = parseArgs(
     args,
   );
   if (protocolRequestedByCLI) {

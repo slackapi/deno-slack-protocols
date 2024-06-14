@@ -1,31 +1,39 @@
 {
   "$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
+  "name": "@slack/protocols",
+  "version": "0.0.2-pre.2",
+  "exports": {
+    ".": "./src/mod.ts",
+    "./mock": "./src/mock.ts",
+    "./types": "./src/types.ts"
+  },
   "fmt": {
-    "files": {
-      "include": ["src", "docs", "README.md"]
-    },
-    "options": {
-      "semiColons": true,
-      "indentWidth": 2,
-      "lineWidth": 80,
-      "proseWrap": "always",
-      "singleQuote": false,
-      "useTabs": false
-    }
+    "include": ["src", "docs", "README.md"],
+    "semiColons": true,
+    "indentWidth": 2,
+    "lineWidth": 80,
+    "proseWrap": "always",
+    "singleQuote": false,
+    "useTabs": false
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@^0.226.0",
+    "@std/cli": "jsr:@std/cli@^0.224.6",
+    "@std/testing": "jsr:@std/testing@^0.225.1"
   },
   "lint": {
-    "files": {
-      "include": ["src"]
-    }
+    "include": ["src"]
   },
-  "test": {
-    "files": {
-      "include": ["src/tests.ts"]
-    }
+  "lock": false,
+  "publish": {
+    "exclude": ["mod.ts", "mock.ts", "types.ts", ".github", ".vscode"]
   },
   "tasks": {
     "test": "deno fmt --check && deno lint && deno test --allow-read --allow-net",
-    "generate-lcov": "rm -rf .coverage && deno test --reporter=dot --allow-read --allow-net --coverage=.coverage && deno coverage --exclude=fixtures --exclude=test --lcov --output=lcov.info .coverage",
-    "test:coverage": "deno task generate-lcov && deno coverage --exclude=fixtures --exclude=test .coverage src"
+    "generate-lcov": "rm -rf .coverage && deno test --allow-read --allow-net --coverage=.coverage && deno coverage --exclude=fixtures --exclude=test --lcov --output=lcov.info .coverage",
+    "test:coverage": "deno task generate-lcov && deno coverage --detailed --exclude=fixtures --exclude=test .coverage src"
+  },
+  "test": {
+    "include": ["src/tests.ts"]
   }
 }

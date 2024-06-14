@@ -1,11 +1,10 @@
+import { assertSpyCall, type Spy, spy } from "@std/testing/mock";
 import {
   assertEquals,
+  assertMatch,
   assertNotEquals,
-  assertSpyCall,
   assertThrows,
-  Spy,
-  spy,
-} from "./dev_deps.ts";
+} from "@std/assert";
 import {
   BaseProtocol,
   getProtocolInterface,
@@ -43,6 +42,16 @@ Deno.test("MessageBoundaryProtocol", async (t) => {
       prot.respond("hiho");
       assertSpyCall(logSpy, 0, { args: ["12345hiho12345"] });
       globalThis.console.log = origLog;
+    },
+  );
+  await t.step(
+    "should return a `getCLIFlags` method that returns correct --protocol and --boundary flags",
+    () => {
+      const providedFlags = ["--boundary=12345"];
+      const prot = MessageBoundaryProtocol(providedFlags);
+      const flags = prot.getCLIFlags();
+      assertMatch(flags[0], /message-boundaries/);
+      assertEquals(flags[1], providedFlags[0]);
     },
   );
 });
